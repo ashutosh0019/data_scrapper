@@ -10,7 +10,7 @@ const generateScrapperUrl = (apiKey) => `http://api.scraperapi.com?api_key=${api
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Welcome to Amazon Data Scraper API');
+    res.send('Welcome to Data Scraper API');
 });
 
 //get product details

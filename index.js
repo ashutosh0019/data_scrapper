@@ -5,9 +5,7 @@ const request = require('request-promise');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-//enter api key
-const apiKey = 'dfg5df48t7yht454jmhj6k54sa656';
-const baseUrl = `http://api.scraperapi.com?api_key=${apiKey}&autoparse=true`;
+const generateScrapperUrl = (apiKey) => `http://api.scraperapi.com?api_key=${apiKey}&autoparse=true`;
 
 app.use(express.json());
 
@@ -18,8 +16,9 @@ app.get('/', (req, res) => {
 //get product details
 app.get('/products/:productId', async(req, res)=>{
     const { productId} = req.params;
+    const { api_key } = req.query;
     try{
-        const response = await request(`${baseUrl}&url=https://www.amazon.in/dp/${productId}`);
+        const response = await request(`${generateScrapperUrl(api_key)}&url=https://www.amazon.in/dp/${productId}`);
 
         res.json(JSON.parse(response));
     }
@@ -31,8 +30,9 @@ app.get('/products/:productId', async(req, res)=>{
 //get product reviews
 app.get('/products/:productId/reviews', async(req, res)=>{
     const { productId} = req.params;
+    const { api_key } = req.query;
     try{
-        const response = await request(`${baseUrl}&url=https://www.amazon.in/product-reviews/${productId}`);
+        const response = await request(`${generateScrapperUrl(api_key)}&url=https://www.amazon.in/product-reviews/${productId}`);
 
         res.json(JSON.parse(response));
     }
@@ -44,8 +44,9 @@ app.get('/products/:productId/reviews', async(req, res)=>{
 //get product offers
 app.get('/products/:productId/offers', async(req, res)=>{
     const { productId} = req.params;
+    const { api_key } = req.query;
     try{
-        const response = await request(`${baseUrl}&url=https://www.amazon.in/gp/offer-listing/${productId}`);
+        const response = await request(`${generateScrapperUrl(api_key)}&url=https://www.amazon.in/gp/offer-listing/${productId}`);
 
         res.json(JSON.parse(response));
     }
@@ -57,8 +58,9 @@ app.get('/products/:productId/offers', async(req, res)=>{
 //get search result
 app.get('/search/:searchQuery', async(req, res)=>{
     const {searchQuery} = req.params;
+    const { api_key } = req.query;
     try{
-        const response = await request(`${baseUrl}&url=https://www.amazon.in/s?k=${searchQuery}`);
+        const response = await request(`${generateScrapperUrl(api_key)}&url=https://www.amazon.in/s?k=${searchQuery}`);
 
         res.json(JSON.parse(response));
     }
